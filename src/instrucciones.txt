@@ -1,0 +1,77 @@
+Ctrl + ñ = se ve el terminal
+
+1. Instalar bootstrap en nuestro proyecto.
+
+>npm install --save bootstrap // instala el bootstrap en el proyecto
+
+el bootstrap se descarga en la carpeta ../node_modules/bootstrap que está a un nivel superior o al mismo nivel 
+de /src/.
+Para agregarlo al proyecto debemos abrir el archivo .angular-cli.json que contiene la información básica para que 
+nuestro proyecto se ejecute o inicie. Debemos buscar la sección de styles que es un arreglo y quedaría así:
+
+        "styles": [
+        "styles.css",
+        "../node_modules/bootstrap/dist/css/bootstrap.css"
+        ],
+
+Ahora corremos el proyecto y visualizarlo en el navegador de internet (google chrome preferiblemente)
+
+>ng serve
+
+2. Agregar un campo input en /app/app.component.html
+
+Al agregar un formulario a nuestro proyecto debemos importar a app/app.modules.ts la librería FormsModule y luego 
+agregarla a los imports:
+
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+        .
+        .
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  .
+  .
+
+luego abrimos la vista /app/app.component.html y colocamos lo siguiente:
+
+<input type="text" [(ngModel)]="name" >
+<p>{{name}}</p>
+
+Lo cual 
+
+3. Agregar un list group de bootstrap desde https://getbootstrap.com/docs/3.3/components/#list-group
+
+Para ello copiamos el código fuente y lo pegamos en nuestra vista (app/app.component.html)
+
+<ul class="list-group">
+  <li class="list-group-item">Cras justo odio</li>
+  <li class="list-group-item">Dapibus ac facilisis in</li>
+  <li class="list-group-item">Morbi leo risus</li>
+  <li class="list-group-item">Porta ac consectetur ac</li>
+  <li class="list-group-item">Vestibulum at eros</li>
+</ul>
+
+4. Generar un arreglo en typescript y que los elementos de ese arreglo se muestren en la lista anterior
+Para ellos nos vamos al controlador /app/app.component.ts y creamos una variable tipo arreglo que 
+contendrán las notas
+
+my_notes = [
+        {id:1, title:'Nota 1',description:'Descripción para la nota 1'},
+        {id:2, title:'Nota 2',description:'Descripción para la nota 2'},
+        {id:3, title:'Nota 3',description:'Descripción para la nota 3'},
+        {id:4, title:'Nota 4',description:'Descripción para la nota 4'},
+        {id:5, title:'Nota 5',description:'Descripción para la nota 5'}
+];
+
+ahora tenemos que mostrart la información del arreglo, para ello eliminamos todos los elemento de la lista menos
+ el primero y quedaría así:
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let n of my_notes">{{+ n.id}} . {{n.title}}</li>
+</ul>
+
+
+

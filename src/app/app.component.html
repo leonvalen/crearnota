@@ -1,5 +1,40 @@
+<div class="col-md-6">
+  <h2>Listado de Notas</h2>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let n of my_notes">{{+ n.id}} . {{n.title}}</li>
+  </ul>
+  <a class="btn btn-primary btn-block" (click)="addNote()">Nueva Nota</a>
+</div>
+<div class="col-md-6" *ngIf="show_form">
+  <h2>Nueva Nota</h2>
+  <input class="form-control" type="text" placeholder="Título de la nota" [(ngModel)]="note.title">
+  <br>
+  <textarea class="form-control" type="text" placeholder="Título de la nota" [(ngModel)]="note.body"></textarea>
+  <hr>
+  <div class="row">
+
+    <div class="col-md-6">
+      <a class="btn btn-default btn-block" (click)="cancel()">Cancelar</a>
+    </div>
+    <div class="col-md-6">
+      <a class="btn btn-primary btn-block" (click)="createNote()">Guardar Nota</a>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- <input type="text" [(ngModel)]="name" >
+<p>{{name}}</p>
+<a class="btn btn-primary">Botón de Bootstrap</a> -->
+
+
+
+
+
+
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
+<!-- <div style="text-align:center">
   <h1>
     Welcome to {{title}}!
   </h1>
@@ -16,5 +51,4 @@
   <li>
     <h2><a target="_blank" href="https://blog.angular.io//">Angular blog</a></h2>
   </li>
-</ul>
-
+</ul> -->
