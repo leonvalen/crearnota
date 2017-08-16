@@ -73,5 +73,7 @@ ahora tenemos que mostrart la información del arreglo, para ello eliminamos tod
   <li class="list-group-item" *ngFor="let n of my_notes">{{+ n.id}} . {{n.title}}</li>
 </ul>
 
+5. Agregar un estilo de bootstrap
+
 
 

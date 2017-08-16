@@ -16,7 +16,7 @@ export class AppComponent {
     { id: 4, title: 'Nota 4', description: 'Descripción para la nota 4' },
     { id: 5, title: 'Nota 5', description: 'Descripción para la nota 5' }
   ];
-  note = {};
+  note = { id: null, title: null, description: null };
 
   show_form = false;
   addNote() {
@@ -24,6 +24,12 @@ export class AppComponent {
   }
   cancel() {
     this.show_form = false;
+  }
+  createNote() {
+    this.note.id = Date.now();
+    this.my_notes.push(this.note);
+    this.show_form = false;
+    this.note = { id: null, title: null, description: null };
   }
 
 }
