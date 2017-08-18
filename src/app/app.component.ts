@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 
 @Component({
@@ -9,24 +10,45 @@ import { Component } from '@angular/core';
 export class AppComponent {
   name = '';
 
-  my_notes = [
-    { id: 1, title: 'Nota 1', description: 'Descripción para la nota 1' },
-    { id: 2, title: 'Nota 2', description: 'Descripción para la nota 2' },
-    { id: 3, title: 'Nota 3', description: 'Descripción para la nota 3' },
-    { id: 4, title: 'Nota 4', description: 'Descripción para la nota 4' },
-    { id: 5, title: 'Nota 5', description: 'Descripción para la nota 5' }
-  ];
+  // my_notes = [
+  //   { id: 1, title: 'Nota 1', description: 'Descripción para la nota 1' },
+  //   { id: 2, title: 'Nota 2', description: 'Descripción para la nota 2' },
+  //   { id: 3, title: 'Nota 3', description: 'Descripción para la nota 3' },
+  //   { id: 4, title: 'Nota 4', description: 'Descripción para la nota 4' },
+  //   { id: 5, title: 'Nota 5', description: 'Descripción para la nota 5' }
+  // ];
+  my_notes: any;
+
+  constructor(public afDB: AngularFireDatabase) {
+    this.getNotes()
+      .subscribe(
+      notas => {
+        this.my_notes = notas;
+      }
+      );
+  }
+
+  getNotes() {
+    return this.afDB.list('/notas');
+  }
   note = { id: null, title: null, description: null };
 
   show_form = false;
   editing = false;
+
+  removeNote() {
+    this.afDB.database.ref('notas/' + this.note.id).remove();
+    this.note = { id: null, title: null, description: null }; // vaciar los campos
+    this.show_form = false; // ocultar la nota
+  }
+
   addNote() {
     this.show_form = true;
   }
   cancel() {
     this.show_form = false;
   }
-  delete() {
+  /*delete() {
     // hay que iterar por las notas hasta encontrarla
     var me = this;
     this.my_notes.forEach(function (el, i) {
@@ -40,11 +62,24 @@ export class AppComponent {
     });
     this.note = { id: null, title: null, description: null }; // vaciar los campos
     me.show_form = false; // ocultar la nota
-  }
+  }*/
+
+
+
 
   createNote() {
-
     if (this.editing) {
+      this.afDB.database.ref('notas/' + this.note.id).set(this.note);
+    } else {
+      this.note.id = Date.now();
+      this.afDB.database.ref('notas/' + this.note.id).set(this.note);
+    }
+    this.note = { id: null, title: null, description: null }; // vaciar los campos
+    this.show_form = false; // ocultar la nota
+
+
+
+    /*if (this.editing) {
       //alert('Editar')
       // se declara la variable me para no confundirla con this luego 
       var me = this;
@@ -66,6 +101,7 @@ export class AppComponent {
       this.show_form = false;
       this.note = { id: null, title: null, description: null };
     }
+    */
   }
 
   viewnote(note) {
